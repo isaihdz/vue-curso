@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@3"></script>
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    {{ text }}
+  </div>
+  <script>
+    const vm = Vue.createApp({
+      /**
+       * *Función que siempre retorna un JSON
+      */
+      data() {
+        return {
+          text: "Hola vue"
+        };
+      }
+    }).mount("#app");
+    console.info(vm);
+    /**
+     * * Desde consola se puede acceder a la constante vm y cambiar el valor que se muestra en la página
+     */
+  </script>
+</body>
+</html>
