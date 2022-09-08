@@ -20,8 +20,44 @@
         return {
           text: "Accede a tu cuenta",
           open: false,
-          username: ""
-        };
+          username: "",
+          title: "",
+          description: "",
+          posts: [
+            {
+              title: "Título 1",
+              description: "Lorem ipsum..."
+            },
+            {
+              title: "Título 2",
+              description: "Lorem ipsum..."
+            },
+            {
+              title: "Título 3",
+              description: "Lorem ipsum..."
+            },
+            {
+              title: "Título 4",
+              description: "Lorem ipsum..."
+            },
+            {
+              title: "Título 5",
+              description: "Lorem ipsum..."
+            },
+            {
+              title: "Título 6",
+              description: "Lorem ipsum..."
+            },
+            {
+              title: "Título 7",
+              description: "Lorem ipsum..."
+            },
+            {
+              title: "Título 8",
+              description: "Lorem ipsum..."
+            },
+        ]
+        };  
       },
       watch:{
         open(value){
@@ -38,14 +74,44 @@
           return this.open ?  ['open'] : ['closed'];
         }
       },
+      methods:{
+        addPost(){
+          this.posts.push({
+            title: this.title,
+            description: this.description
+          })
+          this.title = "",
+          this.description = ""
+        },
+        removePost(){
+          this.posts.pop();
+        }
+      }, 
       template:`
                 <div class="container" :class="styles">
                   <div>{{ text }}</div>
                   <div v-if="open">
                     <p>Hola, {{ username }} </p>
+                    <div class="list">
+                      <form>
+                        <div>
+                          <div>Título</div>
+                          <input type="text" v-model="title"/>
+                          <div>Descripción</div>
+                          <input type="text"  v-model="description"/>
+                        </div>
+                        <button @click.prevent="addPost" > Agregar Post</button>
+                        <button @click.prevent="removePost" > Quitar Post</button>
+                      </form>
+
+                      <div v-for="(item,i) in posts" :key="i" class="item">
+                        <div class="title"> {{ item.title }} </div>
+                        <p> {{ item.description }} </p>
+                      </div>
+                    </div>
                   </div>
                   <div v-else>
-                    <label> Username </label>
+                    <div> Username </div>
                     <input type="text" v-model="username"/>
                   </div>
                   <button @click="open = !open">
@@ -84,6 +150,17 @@
     }
     .open{
       background: #b5e7a0;
+    }
+    .list{
+      display: flex;
+      flex-flow: column;
+    }
+    .item{
+      border: 1px solid #000;
+    }
+    .title{
+      font-size: 1rem;
+      font-weight: bold;
     }
   </style>
 </body>
