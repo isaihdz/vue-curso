@@ -20,31 +20,77 @@
         return {
           text: "Puerta Cerrada",
           open: false,
+          /*styles: {
+             backgroundColor: "#eca1a6",
+          }
+          con estilos
+          */
         };
       },
       watch:{
         open(value){
           if(value){
             this.text  = "Puerta abierta";
+            //this.styles.backgroundColor = "#b5e7a0";
           }else{
             this.text = "Puerta cerrada";
+            //this.styles.backgroundColor = "#eca1a6";
           }
         }
       },
       computed: {
         label(){
           return this.open ? "Cerrar" : "Abrir" ;
+        },
+        styles(){
+          return this.open ?  ['open'] : ['closed'];
         }
       },
       template:`
-                <div>{{ text }}</div>
-                <button @click="open = !open">{{ open ? "Cerrar" : "Abrir" }}</button>
-                <button @click="open = !open">{{ label }}</button>
+                <div class="container" :class="styles">
+                  <div>{{ text }}</div>
+                  <button @click="open = !open">{{ label }}</button>
+                </div>
                 `
-                /* con propiedad conputada
-                <button @click="open = !open">{{ label }}</button>
-                */
+                /**
+                 *Con estilos 
+                 <div class="container" :style ="styles">
+
+                *Con clases
+                <div class="container" :class="{'open': open, 'closed': !open}">
+                
+                *Con propiedad computada
+                <div class="container" :class="styles">
+                 **/
     }).mount("#app");
   </script>
+  <style>
+    html,body{
+      font-family: Arial, Helvetica, sans-serif;
+      height: 100vh;
+      margin: 0;
+    }
+    #app, .container{
+      align-items: center;
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+      justify-content: center;
+      width: 100%;
+    }
+    button{
+      background: #fff;
+      border: none;
+      border-radius: 12px;
+      margin: 24px auto 0;
+      padding: 8px 24px;
+    }
+    .closed{
+      background: #eca1a6;
+    }
+    .open{
+      background: #b5e7a0;
+    }
+  </style>
 </body>
 </html>
