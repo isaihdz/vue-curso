@@ -10,7 +10,6 @@
 <body>
 
   <div id="app">
-    <!--{{ text }}-->
   </div>
   <script>
     const vm = Vue.createApp({
@@ -18,24 +17,31 @@
        * *Función que siempre retorna un JSON
       */
       data() {
-        return {  
-          text: "<p>Hola vue</p>"
+        return {
+          counter: 0
         };
       },
-      /* Agregando opcion template
-      template:`<div>{{ text }}</div>`*/
-      /* *Agregando directivas
-      *v-text -> permite agregar texto
-      v-once -> muestra el valor de una variable solo una vez, no muestra los cambios en caso de que existan actualizaciones
-      v-html -> permite interpretar html
-      */
-      template:`<div v-html="text"></div>`
+      methods:{
+        increment() {
+          this.counter++;
+        },
+        submit(){
+          //e.preventDefault();
+          this.counter++;
+        },
+        decrement(){
+          this.counter--;
+        }
+      },
+      //template:`<button v-on:click="increment">{{ counter }}</button>`
+      //template:`<button v-on:keyup="increment">{{ counter }}</button>`
+      template:`<form >
+                  <button v-on:click.prevent="increment">+</button>
+                  <label>{{counter}}</label>
+                  <button v-on:click.prevent="decrement">-</button>
+                </form>`
 
     }).mount("#app");
-    //console.info(vm);
-    /**
-     * * Desde consola se puede acceder a la constante vm y cambiar el valor que se muestra en la página
-     */
   </script>
 </body>
 </html>
