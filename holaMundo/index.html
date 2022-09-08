@@ -18,25 +18,25 @@
       */
       data() {
         return {
-          text: "Hola Vue"
+          firstName: "Isaí",
+          lastName: "Hernández",
+          now: new Date()
         };
       },
       methods:{
-        input(e){
-          this.text = e.target.value;
+      },
+      computed:{
+        fullName(){
+          return this.firstName + " " + this.lastName
+        },
+        today(){
+          return this.now.toLocaleDateString();
         }
       },
       template:`
-                <p>{{text}}</p>
-                <input type="text"  
-                v-model="text"/>
+                <div>{{ fullName }}</div>
+                <div>{{ today }}</div>
                 `
-      /*template:`
-                <p>{{text}}</p>
-                <input type="text"  
-                @input="input" 
-                :value="text"/>
-                `*/
 
     }).mount("#app");
   </script>
