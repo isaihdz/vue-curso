@@ -12,156 +12,36 @@
   <div id="app">
   </div>
   <script>
-    const vm = Vue.createApp({
-      /**
-       * *Función que siempre retorna un JSON
-      */
-      data() {
-        return {
-          text: "Accede a tu cuenta",
-          open: false,
-          username: "",
-          title: "",
-          description: "",
-          posts: [
-            {
-              title: "Título 1",
-              description: "Lorem ipsum..."
-            },
-            {
-              title: "Título 2",
-              description: "Lorem ipsum..."
-            },
-            {
-              title: "Título 3",
-              description: "Lorem ipsum..."
-            },
-            {
-              title: "Título 4",
-              description: "Lorem ipsum..."
-            },
-            {
-              title: "Título 5",
-              description: "Lorem ipsum..."
-            },
-            {
-              title: "Título 6",
-              description: "Lorem ipsum..."
-            },
-            {
-              title: "Título 7",
-              description: "Lorem ipsum..."
-            },
-            {
-              title: "Título 8",
-              description: "Lorem ipsum..."
-            },
-        ]
-        };  
-      },
-      watch:{
-        open(value){
-          if(value){
-            this.text  = "Cierra sesión";
-          }else{
-            this.text = "Accede a tu cuenta";
-            this.username = "";
-          }
-        }
-      },
-      computed: {
-        styles(){
-          return this.open ?  ['open'] : ['closed'];
-        }
-      },
-      methods:{
-        addPost(){
-          this.posts.push({
-            title: this.title,
-            description: this.description
-          })
-          this.title = "",
-          this.description = ""
-        },
-        removePost(){
-          this.posts.pop();
-        }
-      }, 
+    const app = Vue.createApp({
       template:`
-                <div class="container" :class="styles">
-                  <div>{{ text }}</div>
-                  <div v-if="open">
-                    <p>Hola, {{ username }} </p>
-                    <div class="list">
-                      <form>
-                        <div>
-                          <div>Título</div>
-                          <input type="text" v-model="title"/>
-                          <div>Descripción</div>
-                          <input type="text"  v-model="description"/>
-                        </div>
-                        <button @click.prevent="addPost" > Agregar Post</button>
-                        <button @click.prevent="removePost" > Quitar Post</button>
-                      </form>
-
-                      <div v-for="(item,i) in posts" :key="i" class="item">
-                        <div class="title"> {{ item.title }} </div>
-                        <p> {{ item.description }} </p>
-                      </div>
+                <v-layout>
+                  <template v-slot:header>
+                    <h3>Este es un título con slot en el header</h3>
+                  </template>
+                  <template v-slot:content>
+                    <div>
+                      Este es un contenido con slot en content
                     </div>
-                  </div>
-                  <div v-else>
-                    <div> Username </div>
-                    <input type="text" v-model="username"/>
-                  </div>
-                  <button @click="open = !open">
-                    <div v-if="!open"> Acceder </div>
-                    <div v-else> Salir </div>
-                  </button>
-                </div>
+                  </template>
+                </v-layout>
                 `
                 /**
                  **/
-    }).mount("#app");
+    });
+
+    app.component("v-layout",{
+      template:`
+                <header>
+                  <slot name="header"></slot>
+                </header>
+                <div>
+                  <slot name="content"></slot>
+                </div>
+                `
+    });
+
+
+    const vm = app.mount("#app");
   </script>
-  <style>
-    html,body{
-      font-family: Arial, Helvetica, sans-serif;
-      height: 100vh;
-      margin: 0;
-    }
-    #app, .container{
-      align-items: center;
-      display: flex;
-      flex-flow: column;
-      height: 100%;
-      justify-content: center;
-      width: 100%;
-    }
-    button{
-      background: #fff;
-      border: none;
-      border-radius: 12px;
-      margin: 24px auto 0;
-      padding: 8px 24px;
-    }
-    .closed{
-      background: #eca1a6;
-    }
-    .open{
-      background: #b5e7a0;
-    }
-    .list{
-      display: flex;
-      flex-flow: column;
-    }
-    .item{
-      border: 1px solid #000;
-    }
-    .title{
-      font-size: 1rem;
-      font-weight: bold;
-    }
-  </style>
 </body>
 </html>
