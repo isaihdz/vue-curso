@@ -18,28 +18,25 @@
       */
       data() {
         return {
-          counter: 0
+          text: "Hola Vue"
         };
       },
       methods:{
-        increment() {
-          this.counter++;
-        },
-        submit(){
-          //e.preventDefault();
-          this.counter++;
-        },
-        decrement(){
-          this.counter--;
+        input(e){
+          this.text = e.target.value;
         }
       },
-      //template:`<button v-on:click="increment">{{ counter }}</button>`
-      //template:`<button v-on:keyup="increment">{{ counter }}</button>`
-      template:`<form >
-                  <button v-on:click.prevent="increment">+</button>
-                  <label>{{counter}}</label>
-                  <button v-on:click.prevent="decrement">-</button>
-                </form>`
+      template:`
+                <p>{{text}}</p>
+                <input type="text"  
+                v-model="text"/>
+                `
+      /*template:`
+                <p>{{text}}</p>
+                <input type="text"  
+                @input="input" 
+                :value="text"/>
+                `*/
 
     }).mount("#app");
   </script>
