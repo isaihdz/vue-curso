@@ -18,22 +18,45 @@
           items: ["item 1", "item 2", "item 3"]
         }
       },
+      methods:{
+        remove(i,String){
+          const item = this.items.filter((el,index) => index !== i);
+          this.items = item;
+          console.info(String);
+        }
+      },
       template:`
                 <ul>
-                  <v-item v-for="item in items" :text="item"></v-item>
+                  <v-item 
+                    v-for="(item,i) in items" 
+                    :text="item"
+                    v-on:remove="remove(i, 'test')"
+                  />
                 </ul>
                 `
                 /**
+                 * comunicación padre -> hijo
+                 *v-on:click="remove(i)"
                  **/
     });
     app.component("v-item",{
       props: {
         text: String
       },
+      methods: {
+        rm(){
+          this.$emit('remove', "test");
+        }
+      },
       template: `
-                  <li>{{text}}</li>
+                  <li v-on:click="rm">{{text}}</li>
                 `
     });
+
+    /**
+     * Comunicación HIjo -> padre
+     *  <li v-on:click="rm">{{text}}</li>
+     */
 
     const vm = app.mount("#app");
   </script>
