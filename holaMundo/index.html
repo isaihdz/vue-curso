@@ -13,33 +13,27 @@
   </div>
   <script>
     const app = Vue.createApp({
+      data(){
+        return{
+          items: ["item 1", "item 2", "item 3"]
+        }
+      },
       template:`
-                <v-layout>
-                  <template v-slot:header>
-                    <h3>Este es un título con slot en el header</h3>
-                  </template>
-                  <template v-slot:content>
-                    <div>
-                      Este es un contenido con slot en content
-                    </div>
-                  </template>
-                </v-layout>
+                <ul>
+                  <v-item v-for="item in items" :text="item"></v-item>
+                </ul>
                 `
                 /**
                  **/
     });
-
-    app.component("v-layout",{
-      template:`
-                <header>
-                  <slot name="header"></slot>
-                </header>
-                <div>
-                  <slot name="content"></slot>
-                </div>
+    app.component("v-item",{
+      props: {
+        text: String
+      },
+      template: `
+                  <li>{{text}}</li>
                 `
     });
-
 
     const vm = app.mount("#app");
   </script>
