@@ -15,49 +15,48 @@
     const app = Vue.createApp({
       data(){
         return{
-          items: ["item 1", "item 2", "item 3"]
-        }
+          text: "Hola Vue"
+        };
       },
       methods:{
-        remove(i,String){
-          const item = this.items.filter((el,index) => index !== i);
-          this.items = item;
-          console.info(String);
+        input(e){
+          this.text = e;
         }
       },
       template:`
-                <ul>
-                  <v-item 
-                    v-for="(item,i) in items" 
-                    :text="item"
-                    v-on:remove="remove(i, 'test')"
-                  />
-                </ul>
+                <div>
+                  <p>{{ text }}</p>
+                  <v-input v-model:value="text"/>
+                </div>
                 `
                 /**
-                 * comunicación padre -> hijo
-                 *v-on:click="remove(i)"
+                 * Utilizando v-bind 
+                 * <v-input v-bind:value="text"
+                  v-on:update="input"/>
+
+                  *Utilizando v-model
+                  <v-input v-model:value="text"/>
+
+                  se simplifica la sintaxis
+                  * Se eliminan la funcion input, en el apartado de methods
+                  y se modifica la función en el componente hijo
                  **/
     });
-    app.component("v-item",{
-      props: {
-        text: String
+
+    app.component("v-input",{
+      props:{
+        value: String
       },
-      methods: {
-        rm(){
-          this.$emit('remove', "test");
+      methods:{
+        input(e){
+          //this.$emit("update",e.target.value);  cuando se usa v-bind en el componente padre
+          this.$emit("update:value",e.target.value);   //cuando se usa v-model en el componente padre, el nombre del metodo debe llamarse update y debe hacer referencia al valor que se va a ha actualizar
         }
       },
-      template: `
-                  <li v-on:click="rm">{{text}}</li>
+      template:`
+                <input type="text" v-bind:value="value" v-on:input="input"/>
                 `
     });
-
-    /**
-     * Comunicación HIjo -> padre
-     *  <li v-on:click="rm">{{text}}</li>
-     */
-
     const vm = app.mount("#app");
   </script>
 </body>
