@@ -18,45 +18,44 @@
           text: "Hola Vue"
         };
       },
-      methods:{
-        input(e){
-          this.text = e;
+      provide(){
+        return{
+          otroTexto: this.text
         }
+        /*
+        Cuando se ocupa otra valor
+        otroTexto: "Hola mundo"
+        */
+
+        /**Cuando se desea acceder a la variable del padre
+         * se modifica provider y se pasa a una funcion 
+         * provide(){
+        return{
+          otroTexto: this.text
+        }
+        */
       },
       template:`
-                <div>
-                  <p>{{ text }}</p>
-                  <v-input v-model:value="text"/>
-                </div>
+                <div>{{ text }}</div>
+                <otro />
                 `
                 /**
-                 * Utilizando v-bind 
-                 * <v-input v-bind:value="text"
-                  v-on:update="input"/>
-
-                  *Utilizando v-model
-                  <v-input v-model:value="text"/>
-
-                  se simplifica la sintaxis
-                  * Se eliminan la funcion input, en el apartado de methods
-                  y se modifica la función en el componente hijo
                  **/
     });
 
-    app.component("v-input",{
-      props:{
-        value: String
-      },
-      methods:{
-        input(e){
-          //this.$emit("update",e.target.value);  cuando se usa v-bind en el componente padre
-          this.$emit("update:value",e.target.value);   //cuando se usa v-model en el componente padre, el nombre del metodo debe llamarse update y debe hacer referencia al valor que se va a ha actualizar
-        }
-      },
+    app.component("otro", {
       template:`
-                <input type="text" v-bind:value="value" v-on:input="input"/>
+                <tercer />
                 `
     });
+
+    app.component("tercer", {
+      inject:["otroTexto"],
+      template:`
+                <div>{{ otroTexto }}</div>
+                `
+    });
+  
     const vm = app.mount("#app");
   </script>
 </body>
