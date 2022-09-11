@@ -18,45 +18,24 @@
           text: "Hola Vue"
         };
       },
-      provide(){
-        return{
-          otroTexto: this.text
-        }
-        /*
-        Cuando se ocupa otra valor
-        otroTexto: "Hola mundo"
-        */
-
-        /**Cuando se desea acceder a la variable del padre
-         * se modifica provider y se pasa a una funcion 
-         * provide(){
-        return{
-          otroTexto: this.text
-        }
-        */
-      },
       template:`
-                <div>{{ text }}</div>
-                <otro />
+                <v-button ref="referencia" :label="text"> </v-button>
                 `
                 /**
                  **/
     });
 
-    app.component("otro", {
+    app.component("v-button",{
+      props:["label"],
       template:`
-                <tercer />
-                `
-    });
-
-    app.component("tercer", {
-      inject:["otroTexto"],
-      template:`
-                <div>{{ otroTexto }}</div>
+                <button > {{ label }}</button>
                 `
     });
   
     const vm = app.mount("#app");
+    console.info(vm.$root);
+    console.info(vm.$refs);
+
   </script>
 </body>
 </html>
