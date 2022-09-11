@@ -19,22 +19,12 @@
         };
       },
       template:`
-                <v-button ref="referencia" :label="text"> </v-button>
                 `
                 /**
                  **/
     });
-
-    app.component("v-button",{
-      props:["label"],
-      template:`
-                <button > {{ label }}</button>
-                `
-    });
   
     const vm = app.mount("#app");
-    console.info(vm.$root);
-    console.info(vm.$refs);
 
   </script>
 </body>
